@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dontcrysisModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="agency">
+          <Key>
+            <PropertyRef Name="idagency" />
+          </Key>
+          <Property Name="idagency" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="telephone" Type="varchar" MaxLength="45" />
+          <Property Name="adderss" Type="varchar" MaxLength="45" />
+          <Property Name="email" Type="varchar" MaxLength="45" />
+          <Property Name="type" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="idevent" />
+          </Key>
+          <Property Name="idevent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="idperson" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="severity" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="annotations" Type="varchar" MaxLength="500" />
+          <Property Name="idreport" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="idPerson" />
+          </Key>
+          <Property Name="idPerson" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="mobile" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="area" Type="varchar" MaxLength="45" />
+          <Property Name="nric" Type="varchar" MaxLength="9" />
+        </EntityType>
+        <EntityType Name="report">
+          <Key>
+            <PropertyRef Name="idreport" />
+          </Key>
+          <Property Name="idreport" Type="int" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="date" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="text" Type="longtext" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_event_person">
+          <End Role="person" Type="Self.person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="event" Type="Self.event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="event">
+              <PropertyRef Name="idperson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_report">
+          <End Role="report" Type="Self.report" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="event" Type="Self.event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="report">
+              <PropertyRef Name="idreport" />
+            </Principal>
+            <Dependent Role="event">
+              <PropertyRef Name="idreport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dontcrysisModelStoreContainer">
+          <EntitySet Name="agency" EntityType="Self.agency" Schema="dontcrysis" store:Type="Tables" />
+          <EntitySet Name="event" EntityType="Self.event" Schema="dontcrysis" store:Type="Tables" />
+          <EntitySet Name="person" EntityType="Self.person" Schema="dontcrysis" store:Type="Tables" />
+          <EntitySet Name="report" EntityType="Self.report" Schema="dontcrysis" store:Type="Tables" />
+          <AssociationSet Name="FK_event_person" Association="Self.FK_event_person">
+            <End Role="person" EntitySet="person" />
+            <End Role="event" EntitySet="event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_report" Association="Self.FK_event_report">
+            <End Role="report" EntitySet="report" />
+            <End Role="event" EntitySet="event" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dontcrysisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="agency">
+          <Key>
+            <PropertyRef Name="idagency" />
+          </Key>
+          <Property Name="idagency" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="telephone" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="adderss" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="idevent" />
+          </Key>
+          <Property Name="idevent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idperson" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="severity" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <Property Name="annotations" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="idreport" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="person" Relationship="Self.FK_event_person" FromRole="event" ToRole="person" />
+          <NavigationProperty Name="report" Relationship="Self.FK_event_report" FromRole="event" ToRole="report" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="idPerson" />
+          </Key>
+          <Property Name="idPerson" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="area" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="nric" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="event" Relationship="Self.FK_event_person" FromRole="person" ToRole="event" />
+        </EntityType>
+        <EntityType Name="report">
+          <Key>
+            <PropertyRef Name="idreport" />
+          </Key>
+          <Property Name="idreport" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <Property Name="text" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="event" Relationship="Self.FK_event_report" FromRole="report" ToRole="event" />
+        </EntityType>
+        <Association Name="FK_event_person">
+          <End Role="person" Type="Self.person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="event" Type="Self.event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="event">
+              <PropertyRef Name="idperson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_report">
+          <End Role="report" Type="Self.report" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="event" Type="Self.event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="report">
+              <PropertyRef Name="idreport" />
+            </Principal>
+            <Dependent Role="event">
+              <PropertyRef Name="idreport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dontcrysisEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="agency" EntityType="Self.agency" />
+          <EntitySet Name="event" EntityType="Self.event" />
+          <EntitySet Name="person" EntityType="Self.person" />
+          <EntitySet Name="report" EntityType="Self.report" />
+          <AssociationSet Name="FK_event_person" Association="Self.FK_event_person">
+            <End Role="person" EntitySet="person" />
+            <End Role="event" EntitySet="event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_report" Association="Self.FK_event_report">
+            <End Role="report" EntitySet="report" />
+            <End Role="event" EntitySet="event" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dontcrysisModelStoreContainer" CdmEntityContainer="dontcrysisEntities">
+          <EntitySetMapping Name="agency">
+            <EntityTypeMapping TypeName="dontcrysisModel.agency">
+              <MappingFragment StoreEntitySet="agency">
+                <ScalarProperty Name="idagency" ColumnName="idagency" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="adderss" ColumnName="adderss" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="event">
+            <EntityTypeMapping TypeName="dontcrysisModel.event">
+              <MappingFragment StoreEntitySet="event">
+                <ScalarProperty Name="idevent" ColumnName="idevent" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="idperson" ColumnName="idperson" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="severity" ColumnName="severity" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="annotations" ColumnName="annotations" />
+                <ScalarProperty Name="idreport" ColumnName="idreport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="person">
+            <EntityTypeMapping TypeName="dontcrysisModel.person">
+              <MappingFragment StoreEntitySet="person">
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="nric" ColumnName="nric" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="report">
+            <EntityTypeMapping TypeName="dontcrysisModel.report">
+              <MappingFragment StoreEntitySet="report">
+                <ScalarProperty Name="idreport" ColumnName="idreport" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="text" ColumnName="text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
